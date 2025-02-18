@@ -1,8 +1,23 @@
-# React + Vite
+# Recipe Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+Ce projet est une application web permettant d'afficher et de gérer des recettes de cuisine.
 
-Currently, two official plugins are available:
+## Technologies utilisées
+- **Frontend** : React, Tailwind CSS
+- **Backend** : Node.js, Express
+- **Base de données** : PostgreSQL avec Sequelize ORM
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Fonctionnalités principales
+- Affichage des recettes sous forme de cartes dans un carrousel interactif
+- Navigation fluide avec SwiperJS et des flèches de navigation personnalisées
+- Chargement des images à partir de la base de données en base64
+- Défilement automatique du carrousel
+- Responsive design avec Tailwind CSS
+
+## Installation
+### Prérequis
+- Node.js installé sur votre machine
+- Un gestionnaire de paquets comme `npm` 
+
