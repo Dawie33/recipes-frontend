@@ -11,6 +11,7 @@ function RecipePage() {
 
   // Fonction pour récupérer une recette par ID
   async function getRecipeById() {
+    
     try {
       const response = await recipes.getById(id) // Passez `id` directement à l'API
       setRecipe(response)

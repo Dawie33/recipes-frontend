@@ -1,53 +1,57 @@
-import React from 'react'
-import { FaUtensils, FaPizzaSlice, FaIceCream, FaHome, FaMugHot, FaLeaf, FaClock } from 'react-icons/fa'
-
+import React, { useEffect, useState } from 'react'
+import { categories } from '../../api/index'
 const RecipeCategories = () => {
-  const categories = [
-    { icon: <FaClock />, label: 'Rapide', color: 'bg-yellow-500' },
-    { icon: <FaHome />, label: 'Famille', color: 'bg-blue-500' },
-    { icon: <FaUtensils />, label: 'Calories smart', color: 'bg-purple-500' },
-    { icon: <FaPizzaSlice />, label: 'Plats', color: 'bg-red-500' },
-    { icon: <FaIceCream />, label: 'Desserts', color: 'bg-pink-500' },
-    { icon: <FaLeaf />, label: 'Végétarien', color: 'bg-green-500' },
-    { icon: <FaMugHot />, label: 'Apéritifs', color: 'bg-orange-500' },
-  ]
+  const [list, setList] = useState([])
+  const [notification, setNotification] = useState(null)
+  const [fetched, setFetched] = useState(false) // Drapeau pour éviter les appels multiples
 
-  const backgroundImage = 'src/assets/images/backgroundImage.webp'
+  // Fonction pour récupérer les recettes
+  async function getCategories() {
+    try {
+      if (!fetched) {
+        // Vérifie si les données ont déjà été récupérées
+        const response = await categories.get()
+        setList(response.rows)
+        setFetched(true) // Marque comme récupéré
+      }
+    } catch (error) {
+      setNotification(error.message)
+    }
+  }
+
+  // Utilisation de useEffect pour exécuter getCategories au montage du composant
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   return (
-    <div className="relative h-screen bg-cover bg-[40%_100%]" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      {/* Overlay pour améliorer la lisibilité */}
-      <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-
-      {/* Contenu superposé */}
-      <div className="relative z-10 flex flex-col justify-between h-full text-white">
-        {/* Header */}
-        <div className="flex flex-col items-center pt-10">
-          <div className="absolute bottom-80 left-1/2 transform -translate-x-1/2 text-center">
-            <h1 className="text-4xl font-bold mb-2">Bienvenue sur Nos Recettes</h1>
-            <p className="text-lg">Explorez nos inspirations thématiques et découvrez de nouvelles saveurs</p>
-          </div>
+    <div className="flex justify-center">
+      <div className="relative max-w-full py-10">
+        {/* Bande blanche pour les catégories */}
+        <div className="text-left mt-6 ">
+          <h2 className="text-2xl font-extrabold inline-block rounded-md">Nos categories de recettes</h2>
         </div>
 
-        {/* Bande blanche pour les catégories */}
-        <div className="bg-white rounded-t-3xl w-9/12 mx-auto">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category, index) => (
-              <div key={index} className="flex flex-col items-center justify-center w-20 h-24 group cursor-pointer">
-                {/* Cercle avec icône */}
-                <div
-                  className={`flex items-center justify-center w-10 h-10 rounded-full text-white transition-transform duration-300 transform hover:scale-125 hover:rotate-12 hover:shadow-xl ${category.color}`}
-                >
-                  <div className="text-2xl">{category.icon}</div>
-                </div>
-
-                {/* Texte sous l'icône */}
-                <span className="text-xs font-medium text-gray-800 mt-2 transition-all duration-300 group-hover:underline group-hover:text-gray-900">
-                  {category.label}
-                </span>
+        <div className="flex flex-wrap  gap-4">
+          {list.map((category, index) => (
+            <div key={index} className="flex flex-col items-center justify-center w-20 h-24 group cursor-pointer">
+              {/* Cercle avec icône */}
+              <div
+                className={`flex items-center justify-center w-10 h-10 rounded-full text-white transition-transform duration-300 transform hover:scale-125 hover:rotate-12 hover:shadow-xl ${category.color}`}
+              >
+                <img
+                  src={category.image ? `data:image/jpeg;base64,${category.image}` : '/path/to/default-image.jpg'}
+                  alt={category.name}
+                  className="w-full h-full object-cover rounded-2xl cursor-pointer"
+                />
               </div>
-            ))}
-          </div>
+
+              {/* Texte sous l'icône */}
+              <span className="text-xs font-medium text-gray-800 mt-2 transition-all duration-300 group-hover:underline group-hover:text-gray-900">
+                {category.name}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -12,4 +12,9 @@ const ingredients = {
   get: (options) => NodeApi.get('http://localhost:3000/ingredients', options),
 }
 
-export { recipes, ingredients }
+const categories = {
+  get: (options) => NodeApi.get('http://localhost:3000/categories', options),
+  post: (options) => NodeApi.post('http://localhost:3000/categories', options),
+}
+
+export { recipes, ingredients, categories }
