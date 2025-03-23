@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { recipes } from './api/index'
+import { categories } from '../src/api/index'
+import Select from 'react-select'
 
 function RecipeForm() {
   const [recipe, setRecipe] = useState({
@@ -19,6 +21,8 @@ function RecipeForm() {
   const [notification, setNotification] = useState(null)
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
+  const [list, setList] = useState([])
+  const [fetched, setFetched] = useState(false) // Drapeau pour éviter les appels multiples
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -86,6 +90,30 @@ function RecipeForm() {
       instructions: [...prevRecipe.instructions, { description: '' }],
     }))
   }
+
+  // Fonction pour récupérer les recettes
+  async function getCategories() {
+    try {
+      if (!fetched) {
+        const response = await categories.get()
+        if (response.rows) {
+          // ✅ Convertir en format { value, label } pour react-select
+          const formattedCategories = response.rows.map((cat) => ({
+            value: cat.categoryId, // Assurez-vous que `id` existe dans l'API
+            label: cat.name, // Assurez-vous que `name` existe dans l'API
+          }))
+
+          setList(formattedCategories)
+          setFetched(true)
+        }
+      }
+    } catch (error) {
+      setNotification(error.message)
+    }
+  }
+  useEffect(() => {
+    getCategories()
+  }, [])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -175,13 +203,12 @@ function RecipeForm() {
             <div className="space-y-4">
               <div className="flex items-center">
                 <label className="w-40 text-gray-700 font-semibold">Catégorie</label>
-                <input
-                  type="text"
-                  name="category"
-                  value={recipe.category}
-                  onChange={handleChange}
-                  required
-                  className="border border-gray-300 rounded p-2 w-full"
+                <Select
+                  options={list} // ✅ Utilise `list` correctement
+                  value={list.find((c) => c.value === recipe.category)} // ✅ Récupère la valeur sélectionnée
+                  onChange={(selectedOption) => setRecipe({ ...recipe, category: selectedOption.value })} // ✅ Met à jour la catégorie
+                  placeholder="Choisissez une catégorie"
+                  isClearable
                 />
               </div>
               <div className="flex items-center">
