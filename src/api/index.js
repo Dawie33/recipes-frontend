@@ -6,6 +6,7 @@ const recipes = {
   post: (options) => NodeApi.post('http://localhost:3000/recipes', options),
   put: (recipeId) => NodeApi.put(`http://localhost:3000/recipe/${recipeId}`),
   delete: (recipeId) => NodeApi.delete(`http://localhost:3000/recipe/${recipeId}`),
+  getRandom: (options) => NodeApi.get('http://localhost:3000/recipes/random', options),
 }
 
 const ingredients = {

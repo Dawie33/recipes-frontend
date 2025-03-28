@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { recipes } from '../../api/index'
-import RecipeCard from './RecipeCard'
+import Carousel from './Carousel'
 
 function RecipeList() {
-  const [recipeList, setRecipeList] = useState([])
+  const [list, setlist] = useState([])
   const [notification, setNotification] = useState(null)
-  const [fetched, setFetched] = useState(false) // Drapeau pour éviter les appels multiples
 
   // Fonction pour récupérer les recettes
   async function getRecipes() {
     try {
-      if (!fetched) {
-        // Vérifie si les données ont déjà été récupérées
-        const response = await recipes.get()
-        setRecipeList(response)
-        setFetched(true) // Marque comme récupéré
-      }
+      // Vérifie si les données ont déjà été récupérées
+      const { rows } = await recipes.get()
+      setlist(rows)
     } catch (error) {
       setNotification(error.message)
     }
@@ -27,8 +23,8 @@ function RecipeList() {
   }, [])
 
   return (
-    <div className="flex justify-center py-20 ">
-      <RecipeCard recipeList={recipeList} />
+    <div className="flex justify-center mt-24 mb-5 " style={{ backgroundColor: '#FFFBF0' }}>
+      <Carousel list={list} />
       {notification && <div className="text-red-500 text-center mt-4">{notification}</div>}
     </div>
   )

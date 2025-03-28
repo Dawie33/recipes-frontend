@@ -1,19 +1,19 @@
 import React from 'react'
-import RecipeList from './recipe/RecipeList'
-import RecipeCategories from './recipe/RecipeCategories'
 import Footer from './Footer'
-import IngredientsList from './IngredientsList'
 import Header from './Header'
-
+import Search from './Search'
+import CategoriesList from './categories/CategoriesList'
+import RecipeList from './recipe/RecipeList'
 function Home() {
   return (
-    <>
+    <div>
       <Header />
+      <Search />
       <RecipeList />
-      <RecipeCategories />
-      <IngredientsList />
+      <CategoriesList />
+
       <Footer />
-    </>
+    </div>
   )
 }
 
