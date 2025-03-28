@@ -1,3 +1,4 @@
+// eslint.config.mjs
 import globals from 'globals'
 import pluginJs from '@eslint/js'
 import pluginReact from 'eslint-plugin-react'
@@ -5,20 +6,32 @@ import prettierConfig from 'eslint-config-prettier'
 import prettierPlugin from 'eslint-plugin-prettier'
 
 export default [
-  { files: ['**/*.{js,mjs,cjs,jsx}'] },
-  { languageOptions: { globals: globals.browser } },
-  pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  prettierConfig,
   {
-    plugins: { prettier: prettierPlugin, react: pluginReact },
+    files: ['**/*.{js,jsx}'],
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    plugins: {
+      react: pluginReact,
+      prettier: prettierPlugin,
+    },
     settings: {
       react: {
-        version: 'detect', // ou remplace "detect" par la version de React, ex. "18.2.0"
+        version: 'detect',
       },
     },
     rules: {
+      ...pluginJs.configs.recommended.rules,
+      ...pluginReact.configs.flat.recommended.rules,
       'prettier/prettier': 'error',
     },
   },
+  prettierConfig,
 ]
