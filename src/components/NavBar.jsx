@@ -50,7 +50,7 @@ const SlideDown = (delay) => {
 
 const NavBar = () => {
   return (
-    <nav className="container flex justify-between  items-center  ">
+    <nav className="container flex justify-between  items-center py-3 ">
       {/*logo section */}
       <motion.img
         initial={{ opacity: 0 }}
@@ -58,7 +58,8 @@ const NavBar = () => {
         transition={{ duration: 0.8, delay: 0.5 }}
         src={Logo}
         alt="logo"
-        className="w-36 rounded-full"
+        className="w-20 rounded-full"
+        style={{ backgroundColor: 'white' }}
       />
       {/* menu */}
       <div className="flex">
@@ -74,10 +75,7 @@ const NavBar = () => {
                   className="nav-menu"
                   data-delay={menu.delay}
                 >
-                  <a
-                    href={menu.path}
-                    className="inline-block px-2 py-2 text-2xl"
-                  >
+                  <a href={menu.path} className="inline-block px-2 py-2 ">
                     {menu.title}
                   </a>
                 </motion.li>
