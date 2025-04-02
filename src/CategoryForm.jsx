@@ -41,7 +41,10 @@ function CategoryForm() {
     try {
       const response = await categories.post(formData)
       if (response) {
-        setNotification({ message: 'Catégorie ajoutée avec succès !', type: 'success' })
+        setNotification({
+          message: 'Catégorie ajoutée avec succès !',
+          type: 'success',
+        })
         navigate('/')
       }
     } catch (error) {
@@ -51,14 +54,20 @@ function CategoryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6 mt-20">
+    <form
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+      className="space-y-6 mt-20"
+    >
       <fieldset className="border rounded border-orange-500 p-6">
         <legend>
           <h1 className="text-orange-500 text-2xl">Ajouter une catégorie</h1>
         </legend>
         <div className="space-y-4">
           <div className="flex items-center">
-            <label className="w-40 text-gray-700 font-semibold">Nom de la catégorie</label>
+            <label className="w-40 text-gray-700 font-semibold">
+              Nom de la catégorie
+            </label>
             <input
               type="text"
               name="name"
@@ -71,27 +80,50 @@ function CategoryForm() {
           <div>
             <h2 className="text-lg font-bold mb-2">Image</h2>
             <div className="flex items-center space-x-4">
-              <button type="button" className="bg-blue-500 text-white p-2 rounded" onClick={handleUploadClick}>
+              <button
+                type="button"
+                className="bg-blue-500 text-white p-2 rounded"
+                onClick={handleUploadClick}
+              >
                 Upload Image
               </button>
-              <input type="file" ref={fileInputRef} onChange={handleImageChange} accept="image/*" className="hidden" />
-              {fileName && <p className="text-sm text-gray-600">Fichier sélectionné : {fileName}</p>}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                accept="image/*"
+                className="hidden"
+              />
+              {fileName && (
+                <p className="text-sm text-gray-600">
+                  Fichier sélectionné : {fileName}
+                </p>
+              )}
             </div>
           </div>
         </div>
       </fieldset>
 
       <div className="flex justify-end space-x-4">
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-4 py-2 rounded"
+        >
           Valider
         </button>
-        <button type="button" onClick={() => navigate('/')} className="bg-red-500 text-white px-4 py-2 rounded">
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="bg-red-500 text-white px-4 py-2 rounded"
+        >
           Quitter
         </button>
       </div>
 
       {notification && (
-        <div className={`p-4 rounded text-white ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+        <div
+          className={`p-4 rounded text-white ${notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}
+        >
           {notification.message}
         </div>
       )}
