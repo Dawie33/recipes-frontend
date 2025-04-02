@@ -7,10 +7,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Roboto', ...fontFamily.sans],
-        // Ajoutez d'autres familles de polices si nécessaire
-      },
-      colors: {
-        bgYellow: '#FFFBF0',
+        playfair: ['"Playfair Display"', 'serif'],
       },
       container: {
         center: true,
