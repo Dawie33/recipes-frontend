@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { recipes } from '../../api/index'
-import Carousel from './Carousel'
+import RecipeCard from './RecipeCard'
 
 function RecipeList() {
   const [list, setlist] = useState([])
@@ -23,9 +23,11 @@ function RecipeList() {
   }, [])
 
   return (
-    <div className="flex justify-center mt-24 mb-5 " style={{ backgroundColor: '#FFFBF0' }}>
-      <Carousel list={list} />
-      {notification && <div className="text-red-500 text-center mt-4">{notification}</div>}
+    <div className="flex justify-center my-24 bg-[#f9f9f7] py-20 ">
+      <RecipeCard list={list} />
+      {notification && (
+        <div className="text-red-500 text-center mt-4">{notification}</div>
+      )}
     </div>
   )
 }

@@ -237,11 +237,11 @@ function RecipeForm() {
                   Catégorie
                 </label>
                 <Select
-                  options={list} // ✅ Utilise `list` correctement
-                  value={list.find((c) => c.value === recipe.category)} // ✅ Récupère la valeur sélectionnée
+                  options={list} 
+                  value={list.find((c) => c.value === recipe.category)} 
                   onChange={(selectedOption) =>
                     setRecipe({ ...recipe, category: selectedOption.value })
-                  } // ✅ Met à jour la catégorie
+                  } 
                   placeholder="Choisissez une catégorie"
                   isClearable
                 />
